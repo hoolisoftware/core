@@ -24,5 +24,6 @@ class PaymentAdmin(admin.ModelAdmin):
     list_display = (
         'method',
         'amount',
+        'created'
         # TODO Order
     )

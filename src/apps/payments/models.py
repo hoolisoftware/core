@@ -1,5 +1,7 @@
 from django.db import models
 
+from mixins.model_mixins import DateCreatedUpdatedModelMixin
+
 
 class PaymentCurrecy(models.Model):
     class Meta:
@@ -26,7 +28,7 @@ class PaymentMethod(models.Model):
         return f'{self.name} {self.currency}'
 
 
-class Payment(models.Model):
+class Payment(DateCreatedUpdatedModelMixin):
     class Meta:
         verbose_name = 'Транзакция'
         verbose_name_plural = 'Транзакции'
