@@ -1,6 +1,6 @@
 from django.db import models
 
-from mixins.model_mixins import DateCreatedUpdatedModelMixin
+from mixins.model_mixins import DateTimeCreatedUpdatedModelMixin
 
 
 class PaymentCurrecy(models.Model):
@@ -22,13 +22,13 @@ class PaymentMethod(models.Model):
 
     currency = models.ForeignKey(PaymentCurrecy, verbose_name='Валюта оплаты', on_delete=models.CASCADE) # noqa
     name = models.CharField('Название', max_length=64)
-    requisites = models.TextField('Реквизиты', blank=True, null=True)
+    requisites = models.TextField('Реквизиты', blank=True)
 
     def __str__(self):
         return f'{self.name} {self.currency}'
 
 
-class Payment(DateCreatedUpdatedModelMixin):
+class Payment(DateTimeCreatedUpdatedModelMixin):
     class Meta:
         verbose_name = 'Транзакция'
         verbose_name_plural = 'Транзакции'

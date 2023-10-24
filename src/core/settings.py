@@ -18,6 +18,7 @@ INSTALLED_APPS = [
 
     'apps.payments',
     'apps.customers',
+    'apps.marketplaces'
 ]
 
 MIDDLEWARE = [

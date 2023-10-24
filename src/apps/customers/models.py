@@ -25,7 +25,7 @@ class Project(DateCreatedUpdatedModelMixin):
     customer = models.ForeignKey(Customer, verbose_name='Заказчик', on_delete=models.SET_NULL, blank=True, null=True) # noqa
     title = models.CharField('Заголовок', max_length=64)
     repository = models.URLField('Ссылка на репозиторий', blank=True, null=True) # noqa
-    description = models.TextField('Короткое описание', blank=True, null=True)
+    description = models.TextField('Короткое описание', blank=True)
     documents = None  # TODO Document
 
     def __str__(self):
