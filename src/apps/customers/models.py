@@ -1,6 +1,7 @@
 from django.db import models
 
 from mixins.model_mixins import DateCreatedUpdatedModelMixin
+from apps.documents.models import Document
 
 
 class Customer(DateCreatedUpdatedModelMixin):
@@ -26,7 +27,7 @@ class Project(DateCreatedUpdatedModelMixin):
     title = models.CharField('Заголовок', max_length=64)
     repository = models.URLField('Ссылка на репозиторий', blank=True, null=True) # noqa
     description = models.TextField('Короткое описание', blank=True)
-    documents = None  # TODO Document
+    documents = models.ManyToManyField(Document, verbose_name='Документы', blank=True) # noqa
 
     def __str__(self):
         return f'#{self.id} - {self.title}'

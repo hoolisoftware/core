@@ -11,6 +11,7 @@ class CustomerAdmin(admin.ModelAdmin):
         'updated',
         'created'
     )
+    search_fields = ('username', 'full_name')
 
 
 @admin.register(models.Project)
@@ -21,3 +22,4 @@ class ProjectAdmin(admin.ModelAdmin):
         'updated',
         'created'
     )
+    autocomplete_fields = ('documents', 'customer')
