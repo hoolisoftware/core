@@ -14,12 +14,20 @@ class CustomerAdmin(admin.ModelAdmin):
     search_fields = ('username', 'full_name')
 
 
+class RepositoryInline(admin.TabularInline):
+    model = models.Repository
+
+
 @admin.register(models.Project)
 class ProjectAdmin(admin.ModelAdmin):
+    inlines = (
+        RepositoryInline,
+    )
     list_display = (
         'customer',
         'title',
         'updated',
         'created'
     )
+    search_fields = ('title', )
     autocomplete_fields = ('documents', 'customer')

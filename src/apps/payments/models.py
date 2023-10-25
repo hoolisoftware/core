@@ -1,6 +1,7 @@
 from django.db import models
 
 from mixins.model_mixins import DateTimeCreatedUpdatedModelMixin
+from apps.orders.models import Order
 
 
 class PaymentCurrecy(models.Model):
@@ -35,7 +36,7 @@ class Payment(DateTimeCreatedUpdatedModelMixin):
 
     method = models.ForeignKey(PaymentMethod, verbose_name='Метод оплаты', on_delete=models.CASCADE) # noqa ignore
     amount = models.PositiveIntegerField('Сумма')
-    order = None  # TODO Order
+    order = models.ForeignKey(Order, verbose_name='Заказ', on_delete=models.SET_NULL, null=True) # noqa
 
     def __str__(self):
         return f'{self.amount} {self.method.currency}'

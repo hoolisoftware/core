@@ -9,7 +9,7 @@ class Document(DateCreatedUpdatedModelMixin):
         verbose_name_plural = 'Документы'
 
     name = models.CharField('Название документа', max_length=64)
-    file = models.FileField('Документ', upload_to='uploads/%Y/%m/%d/')
+    file = models.FileField('Документ', upload_to='documents/document/file/%Y/%m/%d/') # noqa
     description = models.TextField('Описание документа', blank=True)
 
     def __str__(self):
