@@ -17,7 +17,7 @@ SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['core.hoolisoftware.xyz']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
