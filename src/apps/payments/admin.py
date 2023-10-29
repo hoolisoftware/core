@@ -1,29 +1,34 @@
 from django.contrib import admin
+from mptt.admin import DraggableMPTTAdmin
+
 
 from . import models
 
 
-@admin.register(models.PaymentCurrecy)
-class PaymentCurrencyAdmin(admin.ModelAdmin):
+@admin.register(models.Currency)
+class CurrencyAdmin(admin.ModelAdmin):
     list_display = (
-        'name',
-        'code'
+        'code',
     )
 
 
 @admin.register(models.PaymentMethod)
-class PaymentMethodAdmin(admin.ModelAdmin):
+class PaymentMethodAdmin(DraggableMPTTAdmin):
     list_display = (
-        'name',
-        'currency'
+        'indented_title',
     )
+    list_display_links = (
+        'indented_title',
+    )
+    search_fields = ('name', )
 
 
 @admin.register(models.Payment)
 class PaymentAdmin(admin.ModelAdmin):
     list_display = (
-        'method',
+        'period',
         'amount',
+        'method',
         'created',
-        'order'
     )
+    autocomplete_fields = ('method', )

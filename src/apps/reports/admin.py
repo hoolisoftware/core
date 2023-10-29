@@ -7,8 +7,6 @@ from . import models
 class WorkSessionReportAdmin(admin.ModelAdmin):
     list_display = (
         'minutes',
-        'executor',
-        'order',
         'created'
     )
-    autocomplete_fields = ('executor', 'order')
+    autocomplete_fields = ('period', )

@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 
 from mixins.model_mixins import DateCreatedUpdatedModelMixin
-from apps.orders.models import Order
+from apps.projects.models import Period
 
 
 User = get_user_model()
@@ -13,9 +13,9 @@ class WorkSessionReport(DateCreatedUpdatedModelMixin):
         verbose_name = 'Рабочая сессия'
         verbose_name_plural = 'Рабочие сессии'
 
-    order = models.ForeignKey(Order, verbose_name='Заказ', on_delete=models.CASCADE, related_name='work_sessions') # noqa
+    period = models.ForeignKey(Period, verbose_name='Период', on_delete=models.CASCADE, related_name='work_sessions') # noqa
     minutes = models.PositiveIntegerField('Кол-во минут')
-    executor = models.ForeignKey(User, verbose_name='Исполнитель', on_delete=models.CASCADE, related_name='work_sessions') # noqa
+    report = models.FileField('Отчёт', upload_to='reports/work_session_report/report/', null=True, blank=True) # noqa
 
     def __str__(self):
-        return f'[{self.executor.username}, {self.minutes}] {self.order}'
+        return f'{self.minutes} - {self.period}'

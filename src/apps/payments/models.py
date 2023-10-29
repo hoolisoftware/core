@@ -1,32 +1,34 @@
+from mptt.models import MPTTModel, TreeForeignKey
 from django.db import models
 
 from mixins.model_mixins import DateTimeCreatedUpdatedModelMixin
-from apps.orders.models import Order
+from apps.projects.models import Period
 
 
-class PaymentCurrecy(models.Model):
+class Currency(models.Model):
     class Meta:
-        verbose_name = 'Валюта оплаты'
-        verbose_name_plural = 'Валюты оплаты'
+        verbose_name = 'Валюта'
+        verbose_name_plural = 'Валюты'
+        ordering = ('code', )
 
-    name = models.CharField('Название', max_length=64)
-    code = models.CharField('Код', max_length=8)
+    code = models.CharField('Код валюты', max_length=16)
 
     def __str__(self):
-        return f'{self.name} ({self.code})'
+        return self.code
 
 
-class PaymentMethod(models.Model):
+class PaymentMethod(MPTTModel):
     class Meta:
         verbose_name = 'Метод оплаты'
         verbose_name_plural = 'Методы оплаты'
 
-    currency = models.ForeignKey(PaymentCurrecy, verbose_name='Валюта оплаты', on_delete=models.CASCADE) # noqa
+    parent = TreeForeignKey('self', verbose_name='Родитель', on_delete=models.CASCADE, null=True, blank=True, related_name='children') # noqa
+    currency = models.ForeignKey(Currency, verbose_name='Валюта', on_delete=models.CASCADE, related_name='methods', null=True, blank=True) # noqa
     name = models.CharField('Название', max_length=64)
     requisites = models.TextField('Реквизиты', blank=True)
 
     def __str__(self):
-        return f'{self.name} {self.currency}'
+        return ' / '.join([i.name for i in self.get_ancestors(include_self=True)]) # noqa
 
 
 class Payment(DateTimeCreatedUpdatedModelMixin):
@@ -36,7 +38,7 @@ class Payment(DateTimeCreatedUpdatedModelMixin):
 
     method = models.ForeignKey(PaymentMethod, verbose_name='Метод оплаты', on_delete=models.CASCADE) # noqa ignore
     amount = models.PositiveIntegerField('Сумма')
-    order = models.ForeignKey(Order, verbose_name='Заказ', on_delete=models.SET_NULL, null=True, related_name='payments') # noqa
+    period = models.ForeignKey(Period, verbose_name='Период', on_delete=models.CASCADE) # noqa
 
     def __str__(self):
         return f'{self.amount} {self.method.currency}'

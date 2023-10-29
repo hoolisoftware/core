@@ -17,7 +17,7 @@ SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['core.hoolisoftware.xyz']
+ALLOWED_HOSTS = ['core.hoolisoftware.xyz', 'localhost']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -27,12 +27,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'apps.documents',
     'apps.payments',
+    'apps.services',
     'apps.customers',
     'apps.marketplaces',
-    'apps.documents',
-    'apps.orders',
-    'apps.reports'
+    'apps.projects',
+    'apps.reports',
+
+    'apps.admin.orders'
 ]
 
 MIDDLEWARE = [
@@ -66,18 +69,18 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env('DATABASE_NAME'),
-        'USER': env('DATABASE_USER'),
-        'PASSWORD': env('DATABASE_PASSWORD'),
-        'HOST': env('DATABASE_HOST'),
-        'PORT': env('DATABASE_PORT'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': env('DATABASE_NAME'),
+    #     'USER': env('DATABASE_USER'),
+    #     'PASSWORD': env('DATABASE_PASSWORD'),
+    #     'HOST': env('DATABASE_HOST'),
+    #     'PORT': env('DATABASE_PORT'),
+    # }
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -110,3 +113,5 @@ MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MPTT_ADMIN_LEVEL_INDENT = 30
